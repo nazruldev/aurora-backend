@@ -66,8 +66,8 @@ function LoginForm() {
           </button>
         </form>
         <p className="muted" style={{ marginBottom: 0, marginTop: "1rem" }}>
-          Default bootstrap: user <code>admin</code>, password dari env atau{" "}
-          <code>change-me-now</code>.
+          Seeder awal: user <code>admin</code>, password default{" "}
+          <code>015999</code> (atau <code>BOOTSTRAP_ADMIN_PASSWORD</code> di env).
         </p>
       </div>
     </main>

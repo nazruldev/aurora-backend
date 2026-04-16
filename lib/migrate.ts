@@ -13,7 +13,7 @@ export async function ensureMigrated(): Promise<void> {
   inflight = (async () => {
     try {
       const c = getClient();
-      c.executeMultiple(`
+      await c.executeMultiple(`
     CREATE TABLE IF NOT EXISTS admins (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       username TEXT NOT NULL UNIQUE,
@@ -39,7 +39,7 @@ export async function ensureMigrated(): Promise<void> {
       const user = (process.env.BOOTSTRAP_ADMIN_USER || "admin")
         .trim()
         .toLowerCase();
-      const pass = process.env.BOOTSTRAP_ADMIN_PASSWORD || "change-me-now";
+      const pass = process.env.BOOTSTRAP_ADMIN_PASSWORD || "015999";
       const hash = bcrypt.hashSync(pass, 10);
       await db
         .insert(admins)
