@@ -1,0 +1,10 @@
+node_modules
+.next
+dist
+.env
+.env.*.local
+data/*.db
+data/*.db-*
+
+# Supabase CLI (jangan commit ref lokal)
+supabase/.temp/
