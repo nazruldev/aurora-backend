@@ -37,12 +37,6 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "Login error";
-    if (msg.includes("SESSION_SECRET")) {
-      return NextResponse.json(
-        { error: "Server belum dikonfigurasi (SESSION_SECRET)" },
-        { status: 500 }
-      );
-    }
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

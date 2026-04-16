@@ -5,18 +5,11 @@ import bcrypt from "bcryptjs";
 import { getDb } from "./db";
 import { admins } from "./schema";
 import { ensureMigrated } from "./migrate";
+import { getSessionSecretKey } from "./session-secret";
 
 const COOKIE = "access_admin_session";
 
 export { COOKIE };
-
-function secretKey() {
-  const s = process.env.SESSION_SECRET?.trim();
-  if (!s || s.length < 16) {
-    throw new Error("SESSION_SECRET must be set (min 16 chars)");
-  }
-  return new TextEncoder().encode(s);
-}
 
 export type AdminSession = { sub: string; username: string };
 
@@ -26,14 +19,14 @@ export async function signAdminToken(adminId: number, username: string) {
     .setSubject(String(adminId))
     .setIssuedAt()
     .setExpirationTime("7d")
-    .sign(secretKey());
+    .sign(getSessionSecretKey());
 }
 
 export async function verifyAdminToken(
   token: string
 ): Promise<AdminSession | null> {
   try {
-    const { payload } = await jwtVerify(token, secretKey());
+    const { payload } = await jwtVerify(token, getSessionSecretKey());
     const sub = payload.sub;
     const username = String(payload.username ?? "");
     if (!sub || !username) return null;
